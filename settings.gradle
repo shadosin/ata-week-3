@@ -1,0 +1,6 @@
+rootProject.name = 'ATA-Week-3'
+include ':Utilities'
+include ':Debugging'
+include ':Encapsulation'
+include ':Interfaces'
+include ':PrimitiveWrapperClasses'
