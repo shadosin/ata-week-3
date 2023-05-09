@@ -1,0 +1,33 @@
+@startuml
+title [[https://tiny.amazon.com/ptfuxrhu/PrimeVideoRecommender Prime-Video-Recommender]]
+
+class MostRecentlyUsed<E> {
++ MostRecentlyUsed()
++ MostRecentlyUsed(int capacity)
++ add(E mostRecentlyUsed): E
++ getElements(): E[]
+}
+
+class PrimeVideo {
+- long id
+- String title
+- Duration duration
+- int yearReleased
+- Long mostSimilarPrimeVideo
+}
+
+class PrimeVideoRecommender {
++ watch(long movieId)
++ getRecommendation(): PrimeVideo
+}
+
+class PrimeVideoDao implements ReadOnlyDao
+
+interface ReadOnlyDao<K, V> {
++ get(K key): V
+}
+
+PrimeVideoRecommender o-- MostRecentlyUsed
+PrimeVideoRecommender o-- ReadOnlyDao
+
+@enduml

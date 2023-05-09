@@ -1,0 +1,10 @@
+rootProject.name = 'ATA-Week-3'
+include ':Utilities'
+include ':Debugging'
+include ':Encapsulation'
+include ':Interfaces'
+include ':PrimitiveWrapperClasses'
+include 'SupportingMaterials'
+include 'SupportingMaterials:Encapsulation'
+findProject(':SupportingMaterials:Encapsulation')?.name = 'Encapsulation'
+
