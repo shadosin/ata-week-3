@@ -1,0 +1,39 @@
+plugins {
+    id 'ata-curriculum.snippets-conventions'
+    id 'ata-curriculum.integration-test-conventions'
+}
+
+checkstyle {
+    def suppressionFile = rootProject.file('Utilities/Checkstyle/configuration/checkstyle/unit1/suppressions.xml')
+    configProperties.put('checkstyle.suppression.filter', suppressionFile)
+}
+
+def wflowToTestsMap = [
+        'genericsdatalogger-test'   : ['com.kenzie.datalogger.TimestampedDataTest',
+                                               'com.kenzie.datalogger.TimestampedStringTest',],
+        'genericsrecommender-test': ['com.kenzie.recommender.movie.PrimeVideoRecommenderGetRecommendationTest'],
+        'genericswatcher-test'    : ['com.kenzie.recommender.movie.PrimeVideoRecommenderWatchTest'],
+        'genericsrostermanager-test': ['com.kenzie.attendance.management.WeeklyRosterManagerTest']
+]
+
+wflowToTestsMap.forEach { wflowName, testList ->
+    tasks.register(wflowName) {
+        dependsOn wflowtest
+        test.doFirst {
+            filter {
+                testList.each { includeTestsMatching it }
+            }
+        }
+    }
+}
+
+def wflowToMainClassMap = [
+        'genericsdatalogger-main': 'com.kenzie.datalogger.DataLogger',
+        'genericsrostermanager-main': 'com.kenzie.attendance.management.WeeklyRosterManager'
+]
+wflowToMainClassMap.forEach { wflowName, mainClass ->
+    tasks.register(wflowName) {
+        runMain.mainClass.set(mainClass)
+        dependsOn runMain
+    }
+}
