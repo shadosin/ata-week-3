@@ -1,0 +1,84 @@
+{
+  "tests": [
+    {
+      "name": "Encapsulation - RationalNumber Unit Tests",
+      "setup": "",
+      "run": "./gradlew encapsulationrationalnumber-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Encapsulation - Species Unit Tests",
+      "setup": "",
+      "run": "./gradlew encapsulationspecies-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Interfaces - Reversed String Unit Tests",
+      "setup": "",
+      "run": "./gradlew interfacesreversedstring-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Generics - DataLogger Unit Tests",
+      "setup": "",
+      "run": "./gradlew genericsdatalogger-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Generics - Recommender PrimeVideoRecommenderGetRecommendationTest Unit Tests",
+      "setup": "",
+      "run": "./gradlew genericsrecommender-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Generics - Recommender - PrimeVideoRecommenderWatchTest Unit Tests",
+      "setup": "",
+      "run": "./gradlew genericswatcher-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Interfaces - Alexa Device Quality Unit Test",
+      "setup": "",
+      "run": "./gradlew interfacesdevices-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Generics WeeklyRosterManager Test",
+      "setup": "",
+      "run": "./gradlew genericsrostermanager-test --rerun-tasks",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    }
+  ]
+}
