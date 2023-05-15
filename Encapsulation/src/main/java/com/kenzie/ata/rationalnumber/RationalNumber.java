@@ -6,15 +6,34 @@ package com.kenzie.ata.rationalnumber;
  */
 public class RationalNumber {
 
-    public int numerator;
-    public int denominator;
+    private int numerator;
+    private int denominator;
 
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
+    }
+    public void update(int numerator, int denominator){
+        if(denominator == 0){
+            throw new IllegalArgumentException("Denominator cannot be zero");
+        }
+        this.numerator = numerator;
+        this.denominator= denominator;
+        reduce();
+    }
     /**
      * Constructs a new rational number representing 0. Numerator = 0, Denominator = 1.
      */
     public RationalNumber() {
         this.numerator = 0;
         this.denominator = 1;
+    }
+    public RationalNumber(RationalNumber original){
+        this.numerator = original.getNumerator();
+        this.denominator = original.getDenominator();
     }
 
     /**
@@ -66,6 +85,7 @@ public class RationalNumber {
 
         return this.denominator == other.denominator && this.numerator == other.numerator;
     }
+
 
     /**
      * Converts the rational number to the typical way fractions are viewed "numerator/denominator".

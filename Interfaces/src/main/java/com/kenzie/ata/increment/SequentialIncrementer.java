@@ -5,7 +5,7 @@ package com.kenzie.ata.increment;
  * {@code increment()} is called. The value can be retrieved at any
  * time by calling {@code getValue()}.
  */
-public class SequentialIncrementer {
+public class SequentialIncrementer implements Incrementable {
 
     private int value;
 
@@ -16,7 +16,7 @@ public class SequentialIncrementer {
     public SequentialIncrementer() {
         this(0);
     }
-
+    
     /**
      * Creates a new {@code SequentialIncrementer} with specified start
      * value as the initial integer value.

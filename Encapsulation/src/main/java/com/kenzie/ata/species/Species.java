@@ -1,19 +1,40 @@
 package com.kenzie.ata.species;
 
 public class Species {
-    public String name;
-    public int population;
-    public double yearlyGrowthRatePercentage;
+    private String name;
+    private int population;
+    private double yearlyGrowthRatePercentage;
 
     public Species(String name, int population, double yearlyGrowthRatePercentage) {
         this.name = name;
-        this.population = population;
+        setPopulation(population);
         this.yearlyGrowthRatePercentage = yearlyGrowthRatePercentage;
     }
 
-    public void setYearlyGrowthRatePercentage(double yearlyGrowthRatePercentage) {
-        //TODO: Implement method
 
+    public void setYearlyGrowthRatePercentage(double yearlyGrowthRatePercentage) {
+        this.yearlyGrowthRatePercentage = yearlyGrowthRatePercentage;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
+        if(population < 0) throw new IllegalArgumentException("Population must be positive");
+        this.population = population;
+    }
+
+    public double getYearlyGrowthRatePercentage() {
+        return yearlyGrowthRatePercentage;
     }
 
     public int predictPopulation(int years) {

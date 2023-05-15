@@ -23,15 +23,15 @@ public class FixedIncrementer implements Incrementable {
      */
     public FixedIncrementer(int incrementSize, int value) {
         // TODO: Finish implementing this constructor to initialize incrementSize and value
+        this.incrementSize = incrementSize;
+        this.value = value;
 
-        // TODO: Remove this line and update it with the correct implementation
-        this.incrementSize = 0;
     }
 
     @Override
     public int increment() {
         // TODO: Add logic here to increment the value by the size of the increment
-
+        value += incrementSize;
         // returns the newly updated value, after incrementing
         return value;
     }

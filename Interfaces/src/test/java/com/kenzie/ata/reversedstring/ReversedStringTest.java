@@ -10,7 +10,7 @@ public class ReversedStringTest {
     @Test
     public void charAt_firstIndex_returnsFirstChar() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN - call charAt for first index
         char c = sequence.charAt(0);
@@ -23,7 +23,7 @@ public class ReversedStringTest {
     @Test
     public void charAt_lastIndex_returnsLastChar() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN - call charAt for last index
         char c = sequence.charAt(sequence.length() - 1);
@@ -36,7 +36,7 @@ public class ReversedStringTest {
     @Test
     public void charAt_middleIndex_returnsMiddleChar() {
         // GIVEN - "noz*ama"
-        CharSequence sequence = new String("ama*zon");
+        CharSequence sequence = new ReversedString("ama*zon");
 
         // WHEN - call charAt for middle index
         char c = sequence.charAt(3);
@@ -49,7 +49,7 @@ public class ReversedStringTest {
     @Test
     public void charAt_invalidIndex_expectIndexOutOfBoundsException() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN & THEN - calling charAt with an index beyond its length results in an exception
         assertThrows(IndexOutOfBoundsException.class, () -> sequence.charAt(sequence.length()),
@@ -60,7 +60,7 @@ public class ReversedStringTest {
     @Test
     public void length_emptyString_returnsZero() {
         // GIVEN - ""
-        CharSequence sequence = new String("");
+        CharSequence sequence = new ReversedString("");
 
         // WHEN - call to get the length
         int length = sequence.length();
@@ -72,7 +72,7 @@ public class ReversedStringTest {
     @Test
     public void length_nonemptyString_returnsCorrectLength() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN - call to get the length
         int length = sequence.length();
@@ -84,7 +84,7 @@ public class ReversedStringTest {
     @Test
     public void length_nonemptyString_returnsSameLengthAsNonReversedString() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN - call to get the length
         int length = sequence.length();
@@ -96,10 +96,10 @@ public class ReversedStringTest {
     @Test
     public void subSequence_validSubSequence_returnsCorrectSubsequence() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         //WHEN - ask for the first 3 letters
-        CharSequence subsequence = sequence.subSequence(0, 3);
+        CharSequence subsequence = sequence.toString().subSequence(0, 3);
 
         //THEN - the first three letters should be the last three letters of the original in reverse order
         assertEquals("noz", subsequence.toString(), "Expected the first three letters to be the last three" +
@@ -109,7 +109,7 @@ public class ReversedStringTest {
     @Test
     public void subSequence_entireStringAsSubSequence_returnsCorrectSubsequence() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         //WHEN - ask for the entire sequence
         CharSequence subsequence = sequence.subSequence(0, sequence.length());
@@ -122,7 +122,7 @@ public class ReversedStringTest {
     @Test
     public void subSequence_invalidStartIndex_throwsIndexOutOfBounds() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN & THEN - calling subsequence with an invalid start index results in an exception
         assertThrows(IndexOutOfBoundsException.class, () -> sequence.subSequence(-1, 3),
@@ -133,7 +133,7 @@ public class ReversedStringTest {
     @Test
     public void subSequence_invalidEndIndex_throwsIndexOutOfBounds() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN & THEN - calling subsequence with an invalid start index results in an exception
         assertThrows(IndexOutOfBoundsException.class, () -> sequence.subSequence(0, sequence.length() + 1),
@@ -144,7 +144,7 @@ public class ReversedStringTest {
     @Test
     public void toString_emptyString_returnsEmptyString() {
         // GIVEN - ""
-        CharSequence sequence = new String("");
+        CharSequence sequence = new ReversedString("");
 
         // WHEN - call toString to get the string value
         String stringValue = sequence.toString();
@@ -156,7 +156,7 @@ public class ReversedStringTest {
     @Test
     public void toString_nonemptyString_returnsReversedString() {
         // GIVEN - "nozama"
-        CharSequence sequence = new String("amazon");
+        CharSequence sequence = new ReversedString("amazon");
 
         // WHEN - call toString to get the string value
         String stringValue = sequence.toString();

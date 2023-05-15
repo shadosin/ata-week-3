@@ -13,8 +13,8 @@ import java.util.Random;
  */
 public class PrimeVideoRecommender {
     // PARTICIPANT -- Update the generic types in PrimeVideoRecommender
-    private MostRecentlyUsed<?> mostRecentlyViewed;
-    private ReadOnlyDao<?, ?> primeVideoDao;
+    private MostRecentlyUsed<PrimeVideo> mostRecentlyViewed;
+    private ReadOnlyDao<Long, PrimeVideo> primeVideoDao;
     private Random random;
 
     /**
@@ -25,8 +25,8 @@ public class PrimeVideoRecommender {
      * @param random             the random
      */
     // PARTICIPANT -- Update the generic types in PrimeVideoRecommender
-    public PrimeVideoRecommender(MostRecentlyUsed<?> mostRecentlyViewed,
-                                 ReadOnlyDao<?, ?> primeVideoDao, Random random) {
+    public PrimeVideoRecommender(MostRecentlyUsed<PrimeVideo> mostRecentlyViewed,
+                                 ReadOnlyDao<Long, PrimeVideo> primeVideoDao, Random random) {
         this.mostRecentlyViewed = mostRecentlyViewed;
         this.primeVideoDao = primeVideoDao;
         this.random = random;
@@ -41,6 +41,11 @@ public class PrimeVideoRecommender {
      */
     public void watch(long videoId) {
         // PARTICIPANT -- Implement watch()
+        PrimeVideo video = primeVideoDao.get(videoId);
+        if (video == null){
+            throw new IllegalArgumentException("Invalid video ID");
+        }
+        mostRecentlyViewed.add(video);
     }
 
     /**
@@ -52,6 +57,18 @@ public class PrimeVideoRecommender {
      */
     public PrimeVideo getRecommendation() {
         // PARTICIPANT -- Implement getRecommendation()
-        return null;
+        if(mostRecentlyViewed.getSize() == 0){
+            return null;
+        }
+
+        PrimeVideo movie = mostRecentlyViewed.get(random.nextInt(mostRecentlyViewed.getSize()));
+        Long mostSimilar = movie.getMostSimilarId();
+
+        if(mostSimilar == null){
+            return null;
+        }
+        PrimeVideo recommendation = primeVideoDao.get(mostSimilar);
+        return recommendation;
+
     }
 }

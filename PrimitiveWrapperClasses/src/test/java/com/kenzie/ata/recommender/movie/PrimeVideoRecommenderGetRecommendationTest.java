@@ -30,7 +30,7 @@ public class PrimeVideoRecommenderGetRecommendationTest {
         // Using a seed guarantees us the results of a sequence of calls to nextInt
         random = new Random(1);
 
-        primeVideoRecommender = new PrimeVideoRecommender(mostRecentlyViewed, readOnlyDAO, random);
+        primeVideoRecommender = new PrimeVideoRecommender((MostRecentlyUsed<PrimeVideo>) mostRecentlyViewed, (ReadOnlyDao<Long, PrimeVideo>) readOnlyDAO, random);
     }
 
     @Test
@@ -48,8 +48,14 @@ public class PrimeVideoRecommenderGetRecommendationTest {
         // GIVEN
         long[] moviesWatched = {1};
         long expectedRecommendation = 2;
+        watchPrimeVideos(moviesWatched);
 
-        assertTrue(false, "Not yet implemented.");
+        PrimeVideo recommend = primeVideoRecommender.getRecommendation();
+
+        assertEquals(expectedRecommendation, recommend.getId(), "Expected to recommend video with ID " + expectedRecommendation);
+
+
+
 
     }
 

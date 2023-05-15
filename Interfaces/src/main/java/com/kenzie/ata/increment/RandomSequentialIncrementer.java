@@ -50,7 +50,8 @@ public class RandomSequentialIncrementer implements Incrementable {
     public int increment() {
         // TODO: Add logic here to increment the value by a random increment
         // Hint: random.nextInt() may be helpful here. It returns a value on [0, arg)
-
+        int increment = random.nextInt(maxIncrement) + MIN_INCREMENT;
+        value += increment;
         // returns the newly updated value, after incrementing
         return value;
     }

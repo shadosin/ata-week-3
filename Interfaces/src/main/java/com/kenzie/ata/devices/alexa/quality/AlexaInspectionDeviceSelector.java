@@ -1,5 +1,6 @@
 package com.kenzie.ata.devices.alexa.quality;
 
+import com.kenzie.ata.increment.Incrementable;
 import com.kenzie.ata.increment.SequentialIncrementer;
 
 /**
@@ -8,14 +9,14 @@ import com.kenzie.ata.increment.SequentialIncrementer;
  */
 public class AlexaInspectionDeviceSelector {
 
-    private final SequentialIncrementer incrementer;
+    private final Incrementable incrementer;
 
     /**
      * Instantiates a new Alexa inspection device selector with the given incrementer.
      *
      * @param incrementer the incrementer
      */
-    public AlexaInspectionDeviceSelector(SequentialIncrementer incrementer) {
+    public AlexaInspectionDeviceSelector(Incrementable incrementer) {
         this.incrementer = incrementer;
     }
 

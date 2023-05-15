@@ -1,13 +1,16 @@
 package com.kenzie.ata.attendance.management;
 
+import com.kenzie.ata.attendance.participants.Participant;
 import com.kenzie.ata.attendance.participants.ParticipantManager;
 import com.kenzie.ata.set.ATASet;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 
 /**
  * A tool to help ATA program managers track a week's attendance and swaps.
  */
+//Worked with group CAP and ChatGPT to complete
 public class WeeklyRosterManager {
     // the monday of the week the classes will be held
     private LocalDate mondayOfTeachingWeek;
@@ -71,27 +74,27 @@ public class WeeklyRosterManager {
         checkEquals(false, mwilaMarkedAbsent,
                     "ERROR: Successful in marking Participant with id: 57 as absent in wrong section.");
 
-        // COMPLETION FINISHED
+//         COMPLETION FINISHED
+//
+//         EXTENSION - uncomment the below code blocks to test your swap logic
 
-        // EXTENSION - uncomment the below code blocks to test your swap logic
+         System.out.println("\nPerforming participant swaps.");
+         //Swap Subin Hong from the Tuesday section to the Thursday section
+         boolean subinSwapped = sectionManager.scheduleSwap(SectionDay.TUESDAY, 22);
+         checkEquals(true, subinSwapped, "ERROR: Unsuccessful in swapping participant with id: 22 into: " +
+                      SectionDay.THURSDAY);
+         System.out.println("Participant with id: 22 swapped into " + SectionDay.THURSDAY);
 
-        // System.out.println("\nPerforming participant swaps.");
-        // Swap Subin Hong from the Tuesday section to the Thursday section
-        // boolean subinSwapped = sectionManager.scheduleSwap(SectionDay.TUESDAY, 22);
-        // checkEquals(true, subinSwapped, "ERROR: Unsuccessful in swapping participant with id: 22 into: " +
-        //              SectionDay.THURSDAY);
-        // System.out.println("Participant with id: 22 swapped into " + SectionDay.THURSDAY);
+         //Swap Kundan Rai from the Thursday section to the Tuesday section
+         boolean kundanSwapped = sectionManager.scheduleSwap(SectionDay.THURSDAY, 36);
+         checkEquals(true,kundanSwapped, "ERROR: Unsuccessful in swapping participant with id: 36 into: " +
+                      SectionDay.TUESDAY);
+         System.out.println("Participant with id: 36 swapped into " + SectionDay.TUESDAY);
 
-        // Swap Kundan Rai from the Thursday section to the Tuesday section
-        // boolean kundanSwapped = sectionManager.scheduleSwap(SectionDay.THURSDAY, 36);
-        // checkEquals(true,kundanSwapped, "ERROR: Unsuccessful in swapping participant with id: 36 into: " +
-        //              SectionDay.TUESDAY);
-        // System.out.println("Participant with id: 36 swapped into " + SectionDay.TUESDAY);
-
-        // Unable to swap Theta Milhoan from the wrong section
-        // boolean thetaSwapped = sectionManager.scheduleSwap(SectionDay.THURSDAY, 8);
-        //checkEquals(false, thetaSwapped, "ERROR: Successful in swapping participant with id: 8 into section " +
-        //              "they already attend");
+         //Unable to swap Theta Milhoan from the wrong section
+         boolean thetaSwapped = sectionManager.scheduleSwap(SectionDay.THURSDAY, 8);
+        checkEquals(false, thetaSwapped, "ERROR: Successful in swapping participant with id: 8 into section " +
+                      "they already attend");
 
         System.out.println("\nPrinting section rosters.\n");
         sectionManager.printSectionRosters();
@@ -136,6 +139,33 @@ public class WeeklyRosterManager {
      */
     public void addParticipantsToSection(SectionDay section, String participantList) {
         // ATA Participants - implement
+        ATASet<Long> sectionParticipants;
+        if (section == SectionDay.TUESDAY) {
+            sectionParticipants = tuesdayParticipants;
+        } else if (section == SectionDay.THURSDAY) {
+            sectionParticipants = thursdayParticipants;
+        } else {
+            throw new IllegalArgumentException("Invalid section day.");
+        }
+
+        String[] participantIds = participantList.split(",");
+        for (String idString : participantIds) {
+            try {
+                long id = Long.parseLong(idString.trim());
+                if (sectionParticipants.size() < maxClassSize) {
+                    sectionParticipants.add(id);
+                } else {
+                    System.out.println("Class is full. Unable to add participant with id: " + id);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid participant ID: " + idString);
+            }
+        }
+
+    //This method starts by checking which section day was passed in, and retrieves the appropriate ATASet instance for that section. It then splits the participant list string by the comma character, and loops through each substring. Inside the loop, it tries to parse the substring into a long value, and then checks if the section is already full. If not, it adds the participant ID to the appropriate ATASet. If the section is already full, it prints a message saying that it's unable to add that participant. If the substring cannot be parsed into a long value, it prints a message saying that the ID is invalid.
+
+
+
     }
 
     /**
@@ -145,6 +175,20 @@ public class WeeklyRosterManager {
      */
     public void printSectionRosters() {
         // ATA Participants - implement
+        System.out.println("Tuesday section:");
+        Iterator<Long> tuesdayIterator = tuesdayParticipants.iterator();
+        while (tuesdayIterator.hasNext()) {
+            long id = tuesdayIterator.next();
+            System.out.println(manager.lookupParticipantById(id));
+        }
+
+        System.out.println("Thursday section:");
+        Iterator<Long> thursdayIterator = thursdayParticipants.iterator();
+        while (thursdayIterator.hasNext()) {
+            long id = thursdayIterator.next();
+            System.out.println(manager.lookupParticipantById(id));
+        }
+
     }
 
     /**
@@ -158,7 +202,23 @@ public class WeeklyRosterManager {
      */
     public boolean scheduleAbsence(SectionDay attendedSection, long participantId) {
         // ATA Participants - implement
-        return false;
+        ATASet<Long> sectionParticipants;
+        if (attendedSection == SectionDay.TUESDAY) {
+            sectionParticipants = tuesdayParticipants;
+        } else if (attendedSection == SectionDay.THURSDAY) {
+            sectionParticipants = thursdayParticipants;
+        } else {
+            throw new IllegalArgumentException("Invalid section day.");
+        }
+
+        if (sectionParticipants.remove(participantId)) {
+            System.out.println("Marking participants as absent.");
+            System.out.println("Participant with id: " + participantId + " marked as absent from " + attendedSection);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -173,7 +233,41 @@ public class WeeklyRosterManager {
      */
     public boolean scheduleSwap(SectionDay swapOutOf, long participantId) {
         // ATA Participants - implement
-        return false;
+        ATASet<Long> sectionSwapOuts;
+        ATASet<Long> sectionSwapIns;
+
+        // Determine the swap-out and swap-in sets
+        if (swapOutOf == SectionDay.TUESDAY) {
+            sectionSwapOuts = tuesdayParticipants;
+            sectionSwapIns = tuesdaySwapIns;
+        } else if (swapOutOf == SectionDay.THURSDAY) {
+            sectionSwapOuts = thursdayParticipants;
+            sectionSwapIns = thursdaySwapIns;
+        } else {
+            throw new IllegalArgumentException("Invalid section day.");
+        }
+
+        // Check if the maximum number of swaps has already been reached for the section
+        if (sectionSwapIns.size() >= 5) {
+            System.out.println("Maximum number of swaps reached for this section.");
+            return false;
+        }
+
+        // Attempt to remove the participant from the swap-out set
+        if (!sectionSwapOuts.remove(participantId)) {
+            System.out.println("Participant not found in section.");
+            return false;
+        }
+
+        // Attempt to add the participant to the swap-in set
+        if (!sectionSwapIns.add(participantId)) {
+            System.out.println("Participant already in swap-ins for this section.");
+            sectionSwapOuts.add(participantId);  // Put the participant back in the swap-out set
+            return false;
+        }
+
+        // Swap successful
+        return true;
     }
 
     /**

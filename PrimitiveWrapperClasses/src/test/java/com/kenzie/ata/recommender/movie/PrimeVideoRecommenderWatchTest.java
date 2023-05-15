@@ -9,15 +9,14 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PrimeVideoRecommenderWatchTest {
     private File kidsMovies = new File(ClassLoader.getSystemResource("kidsmovies.csv").getPath());
 
     // PARTICIPANT -- Update the generic types in PrimeVideoRecommender
-    private MostRecentlyUsed<?> mostRecentlyViewed;
-    private ReadOnlyDao<?, ?> readOnlyDAO;
+    private MostRecentlyUsed<PrimeVideo> mostRecentlyViewed;
+    private ReadOnlyDao<Long, PrimeVideo> readOnlyDAO;
     private Random random;
 
     private PrimeVideoRecommender primeVideoRecommender;
@@ -29,7 +28,7 @@ class PrimeVideoRecommenderWatchTest {
         // Using a seed guarantees us the results of a sequence of calls to nextInt
         random = new Random(1);
 
-        primeVideoRecommender = new PrimeVideoRecommender(mostRecentlyViewed, readOnlyDAO, random);
+        primeVideoRecommender = new PrimeVideoRecommender((MostRecentlyUsed<PrimeVideo>) mostRecentlyViewed, (ReadOnlyDao<Long, PrimeVideo>) readOnlyDAO, random);
     }
 
     @Test
@@ -46,7 +45,11 @@ class PrimeVideoRecommenderWatchTest {
     public void watch_watchPrimeVideo_addToMostRecentlyViewed() {
         // GIVEN
         long movieId = 9;
+        PrimeVideo expectedVideo = readOnlyDAO.get(movieId);
 
-        assertTrue(false, "Not yet implemented.");
+        primeVideoRecommender.watch(movieId);
+
+        assertEquals(expectedVideo.getId(), mostRecentlyViewed.get(0).getId());
+
     }
 }
